@@ -5,19 +5,27 @@ This module includes the Folder and sub-folder classes
 """
 import os
 import subprocess
+import datetime
+from OtherFunc import TimeDisplay
 
 class Folder:   
-    def __init__(self, name, path):  
+    def __init__(self,name,path,user,build):
         self.name = name
         self.path = path
         self.dir = os.path.join(path,name)
         self.logfile = os.path.join(self.dir,name + '.log')
+        self.user=user
+        self.build=build
         
-    def create(self): #Create new project Folder (if doesn't exist)
+    def open(self): #Create new project Folder (if doesn't exist)
         try:
             os.stat(self.dir)
         except:
             os.mkdir(self.dir)
+            self.updateLog('Folder Creation')
+            self.subfolder(os.path.join(self.path,self.build))
+
+        self.openFolder()
 
     def subfolder(self,file): #create subfolders
          f = open(file,'r')
@@ -28,6 +36,8 @@ class Folder:
              fold = os.path.join(x.dir,folder.rstrip())
              try:
                  os.mkdir(fold)
+                 os.mkdir(os.path.join(fold,'Archive'))
+            
              except:
                  continue
                   
@@ -38,8 +48,9 @@ class Folder:
             f.close
         except:
             logtxt=''
-
-        logtxt += (text + '\n')
+            
+        d=datetime.datetime.today()
+        logtxt += ('[' + TimeDisplay(d) + '] ' + self.user + ' -> ' + text + '\n')
         g = open(self.logfile,'w')
         g.write(logtxt)
         g.close
@@ -47,25 +58,24 @@ class Folder:
     def openFolder(self):
         subprocess.call(['explorer',self.dir])
 
+    
+
         
         
 
 
 if __name__ == '__main__':
     import os
-    x = Folder('ENG0001', r'C:\Users\fviallevieille\PythonTest')
+    x = Folder('ENG0001', r'C:\Users\fviallevieille\PythonTest','Fabien Viallevieille','build.txt')
     print('-' * 10)
+    print(x.build)
     print(x.name)
     print(x.path)
     print(x.dir)
     print(x.logfile)
     print('-' * 10)
 
-    x.create()
-    x.updateLog('New Log')
-    x.updateLog('Second Log')
-    file = r'C:\Users\fviallevieille\PythonTest\build.txt'
-    x.subfolder(file)
-    x.openFolder()
+    x.open()
+    #x.openFolder()
         
     
