@@ -18,11 +18,11 @@ def TimeDisplay(datetime):
 def createMF(name,path):
     name=name.strip()
     dir=os.path.join(path,name)
-    db = shelve.open('MasterFolderdb')
+    db = shelve.open('FolderDB')
     try:
         db[dir]
     except:
-        db[dir]=dir
+        db[dir]=[name,path]
     db.close()
 
     try:
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     import os
     import shelve
     from datetime import *
-    name='Human Resource'
+    name='Design'
     path=r'C:\Users\fviallevieille\PythonTest'
     d=datetime.now()
     date = TimeDisplay(d)

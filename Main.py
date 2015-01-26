@@ -1,13 +1,29 @@
 from tkinter import *
 from tkinter import ttk
+import shelve
 root=Tk()
 #root.title="Folder Management System"
-root.update
+#root.update
+
+root.title('Folder Management System')
 Content=ttk.Frame(root)
 Folderlbl=ttk.Label(Content, text="Folder: ")
-foldervar=StringVar()
-Folder = ttk.Combobox(Content, text=foldervar)
-Folder['values']=('Folder1','Folder2','Folder3')
+
+db=shelve.open('FolderDB')
+keys=[]
+Folder=[]
+FolderCombo=[]
+for item in db:
+    keys.append(item)
+    Folder.append(db[item])
+    FolderCombo.append(db[item][0].upper() + ' in ' + db[item][1])
+
+
+
+Folder = ttk.Combobox(Content)
+Folder['values']=FolderCombo
+Folder['width']=50
+
 NewButton=ttk.Button(Content,text='New')
 ProjectFrame=ttk.Frame(Content)
 Projects=StringVar()
