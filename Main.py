@@ -6,11 +6,14 @@ root.update
 Content=ttk.Frame(root)
 Folderlbl=ttk.Label(Content, text="Folder: ")
 foldervar=StringVar()
-Folder = ttk.Combobox(Content, textvariable=foldervar)
+Folder = ttk.Combobox(Content, text=foldervar)
 Folder['values']=('Folder1','Folder2','Folder3')
 NewButton=ttk.Button(Content,text='New')
 ProjectFrame=ttk.Frame(Content)
-ProjectLabel=ttk.Label(ProjectFrame,text='Projects')
+Projects=StringVar()
+ProjectLabel=ttk.Label(ProjectFrame,textvariable=Projects)
+Projects.set('Selecte a Folder')
+
 
 
 
@@ -23,5 +26,5 @@ Folder.grid(column=1,row=0,rowspan=2,sticky=(N,W),padx=5,pady=5)
 NewButton.grid(column=3,row=0,sticky=(N,W),padx=5,pady=3)
 ProjectFrame.grid(column=0,row=1,columnspan=4,sticky=N)
 ProjectLabel.grid(column=0,row=0,columnspan=4,sticky=N)
-
+Folder.bind('<<ComboboxSelected>>',lambda e: Projects.set(Folder.get()))
 
