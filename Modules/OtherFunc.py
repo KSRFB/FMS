@@ -1,4 +1,33 @@
 #!OtherFunc
+import os
+import shelve
+
+
+def Getdbpath(cblist,value,dblist,folderlist):
+    for i in [i for i,x in enumerate(cblist) if x==value]:
+        x=i
+        dbpath=os.path.join(dblist[x],folderlist[x][0] + 'db')
+    return dbpath
+
+def GetDesc(cblist,value,dblist,folderlist):
+    path=Getdbpath(cblist,value,dblist,folderlist)
+    db=shelve.open(path)
+    desc=db['description']
+    LET=db['LET']
+    db.close()
+    return "Description:\n" +desc + "\n\nProjects starts with " + LET
+
+def GetStructure(cblist,value,dblist,folderlist):
+    path=Getdbpath(cblist,value,dblist,folderlist)
+    db=shelve.open(path)
+    lsStruct=db['structure']
+    txtStruct='Project Structure:\n'
+    for item in lsStruct: txtStruct=txtStruct+item+';'
+    txtStruct=txtStruct[:-1]
+    return txtStruct
+
+    
+
 
 def TimeDisplay(datetime):
     y=str(datetime.year)
@@ -74,4 +103,4 @@ if __name__ == '__main__':
     d=datetime.now()
     date = TimeDisplay(d)
     createMF(name,path)
-    
+    print(GetPath(['a','b'],'b',['path1','path2']))
