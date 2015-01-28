@@ -2,6 +2,9 @@
 import os
 import shelve
 
+mesa='No Description, please edit'
+mesb='No starting characters, please edit'
+mesc='No Strucuture, please edit'
 
 def Getdbpath(cblist,value,dblist,folderlist):
     for i in [i for i,x in enumerate(cblist) if x==value]:
@@ -12,9 +15,22 @@ def Getdbpath(cblist,value,dblist,folderlist):
 def GetData(dbpath):
     db=shelve.open(dbpath)
     d=dict()
-    d['description']=db['description']
-    d['LET']=db['LET']
-    d['structure']=db['structure']
+    try:
+        d['description']=db['description']
+    except:
+        d['description']=mesa
+        
+    try:
+        d['LET']=db['LET']
+    except:
+        d['LET']=mesb
+        
+    try:
+        d['structure']=db['structure']
+    except:
+        d['structure']=mesc
+        
+    db.close()
     return d
 
 
@@ -26,9 +42,12 @@ def GetChar(cblist,value,dblist,folderlist):
 
 def GetStructure(cblist,value,dblist,folderlist):
     lsStruct=GetData(Getdbpath(cblist,value,dblist,folderlist))['structure']
-    txtStruct=''
-    for item in lsStruct: txtStruct=txtStruct+item+';'
-    txtStruct=txtStruct[:-1]
+    if lsStruct==mesc:
+        txtStruct=mesc
+    else:
+        txtStruct=''
+        for item in lsStruct: txtStruct=txtStruct+item+';'
+        txtStruct=txtStruct[:-1]
     return txtStruct
 
 def TimeDisplay(datetime):

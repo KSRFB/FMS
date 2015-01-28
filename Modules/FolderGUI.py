@@ -4,6 +4,9 @@ from tkinter import *
 from tkinter import ttk
 import os
 from OtherFunc import *
+sys.path.append(r'C:\Users\fviallevieille\FMS')
+from Modules.OtherFunc import mesa, mesc, mesb
+import sys
 
 class FolderGUI:
     
@@ -32,4 +35,5 @@ class FolderGUI:
 
 
 if __name__=='__main__':
+    sys.path.append(r'C:\Users\fviallevieille\FMS')
     x=FolderGUI(name='Design',path=r'C:\Users\fviallevieille\PythonTest')
