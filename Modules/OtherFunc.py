@@ -9,25 +9,27 @@ def Getdbpath(cblist,value,dblist,folderlist):
         dbpath=os.path.join(dblist[x],folderlist[x][0] + 'db')
     return dbpath
 
+def GetData(dbpath):
+    db=shelve.open(dbpath)
+    d=dict()
+    d['description']=db['description']
+    d['LET']=db['LET']
+    d['structure']=db['structure']
+    return d
+
+
 def GetDesc(cblist,value,dblist,folderlist):
-    path=Getdbpath(cblist,value,dblist,folderlist)
-    db=shelve.open(path)
-    desc=db['description']
-    LET=db['LET']
-    db.close()
-    return "Description:\n" +desc + "\n\nProjects starts with " + LET
+    return GetData(Getdbpath(cblist,value,dblist,folderlist))['description']
+
+def GetChar(cblist,value,dblist,folderlist):
+    return GetData(Getdbpath(cblist,value,dblist,folderlist))['LET']
 
 def GetStructure(cblist,value,dblist,folderlist):
-    path=Getdbpath(cblist,value,dblist,folderlist)
-    db=shelve.open(path)
-    lsStruct=db['structure']
-    txtStruct='Project Structure:\n'
+    lsStruct=GetData(Getdbpath(cblist,value,dblist,folderlist))['structure']
+    txtStruct=''
     for item in lsStruct: txtStruct=txtStruct+item+';'
     txtStruct=txtStruct[:-1]
     return txtStruct
-
-    
-
 
 def TimeDisplay(datetime):
     y=str(datetime.year)

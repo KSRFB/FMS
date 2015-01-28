@@ -1,4 +1,4 @@
-#! Folder.py
+#! Project.py
 
 """
 This module includes the Folder and sub-folder classes
@@ -8,7 +8,7 @@ import subprocess
 import datetime
 from OtherFunc import TimeDisplay
 
-class Folder:   
+class Project:   
     def __init__(self,name,path,user,build):
         self.name = name
         self.path = path
@@ -25,7 +25,7 @@ class Folder:
             self.updateLog('Folder Creation')
             self.subfolder(os.path.join(self.path,self.build))
 
-        self.openFolder()
+        self.openProject()
 
     def subfolder(self,file): #create subfolders
          f = open(file,'r')
@@ -55,7 +55,7 @@ class Folder:
         g.write(logtxt)
         g.close
 
-    def openFolder(self):
+    def openProject(self):
         subprocess.call(['explorer',self.dir])
 
     
@@ -66,7 +66,7 @@ class Folder:
 
 if __name__ == '__main__':
     import os
-    x = Folder('ENG0001', r'C:\Users\fviallevieille\PythonTest','Fabien Viallevieille','build.txt')
+    x = Project('ENG0001', r'C:\Users\fviallevieille\PythonTest','Fabien Viallevieille','build.txt')
     print('-' * 10)
     print(x.build)
     print(x.name)
