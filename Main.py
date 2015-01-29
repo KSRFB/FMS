@@ -6,6 +6,15 @@ import shelve
 """
 Main Window root
 """
+
+
+"""
+TODO: replace structure and description labels by inactive textbox (state=Distable)
+"""
+
+
+
+
 #Create and Edit Window
 root=Tk()
 root.title('Folder Management System')
